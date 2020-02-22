@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private void removeDice()
     {
         Dice dice = diceContainer.removeDice();
-        rollManager.addDice(dice);
+        rollManager.removeDice(dice);
     }
 
     private void roll()

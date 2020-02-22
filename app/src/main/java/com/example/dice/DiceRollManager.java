@@ -15,7 +15,7 @@ public class DiceRollManager {
         resetDice();
     }
 
-    private void removeDice(Dice dice)
+    public void removeDice(Dice dice)
     {
         diceList.remove(dice);
         resetDice();

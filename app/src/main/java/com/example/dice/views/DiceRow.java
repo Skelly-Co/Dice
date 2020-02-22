@@ -45,7 +45,9 @@ public class DiceRow extends LinearLayout {
 
     public Dice removeDice()
     {
-        return null;
+        Dice dice = (Dice) getChildAt(getChildCount()-1);
+        removeView(dice);
+        return dice;
     }
 
 }
