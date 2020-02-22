@@ -11,8 +11,7 @@ public class DiceContainer extends LinearLayout {
 
     private Context ct;
 
-    private int MAX_DICE_COUNT = 2;
-    private int DICE_PER_ROW = 2;
+    private int MAX_DICE_PER_ROW = Integer.MAX_VALUE;
 
     private int diceCount;
 
@@ -29,21 +28,17 @@ public class DiceContainer extends LinearLayout {
                 attrs,
                 R.styleable.DiceContainer,
                 0, 0);
-        if(a.hasValue(R.styleable.DiceContainer_maxDiceCount))
+        if(a.hasValue(R.styleable.DiceContainer_maxDicePerRow))
         {
-            MAX_DICE_COUNT = a.getInt(R.styleable.DiceContainer_maxDiceCount, MAX_DICE_COUNT);
-        }
-        if(a.hasValue(R.styleable.DiceContainer_dicePerRow))
-        {
-            DICE_PER_ROW = a.getInt(R.styleable.DiceContainer_dicePerRow, DICE_PER_ROW);
+            MAX_DICE_PER_ROW = a.getInt(R.styleable.DiceContainer_maxDicePerRow, MAX_DICE_PER_ROW);
         }
         a.recycle();
     }
 
     public Dice addDice()
     {
-        Dice dice = null;
-        if(diceCount%2 == 0)
+        Dice dice;
+        if(diceCount%MAX_DICE_PER_ROW == 0)
         {
             DiceRow diceRow = new DiceRow(ct);
             dice = diceRow.addDice();
@@ -52,7 +47,7 @@ public class DiceContainer extends LinearLayout {
         else
         {
             DiceRow diceRow = (DiceRow) getChildAt(getChildCount()-1);
-            diceRow.addDice();
+            dice = diceRow.addDice();
         }
         diceCount++;
         adjustDiceSizes();
@@ -68,11 +63,11 @@ public class DiceContainer extends LinearLayout {
     private void adjustDiceSizes()
     {
         Dice.DiceSize size;
-        if(diceCount < 3)
+        if(diceCount <= MAX_DICE_PER_ROW)
         {
             size = Dice.DiceSize.BIG;
         }
-        else if(diceCount < 5)
+        else if(diceCount <= MAX_DICE_PER_ROW * 2)
         {
             size = Dice.DiceSize.MEDIUM;
         }
