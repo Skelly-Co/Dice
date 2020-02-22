@@ -10,17 +10,17 @@ import com.example.dice.R;
 public class Dice extends AppCompatImageView {
 
     public enum DiceValue {
-        ONE, TWO, THREE, FOUR, FIVE, SIX;
+        DEFAULT, ONE, TWO, THREE, FOUR, FIVE, SIX;
 
         public static DiceValue getDiceValue(int value)
         {
-            return DiceValue.values()[value];
+            return DiceValue.values()[value+1];
         }
     }
 
     public enum DiceSize {
 
-        SMALL(100), MEDIUM(140), BIG(180);
+        DEFAULT(180), SMALL(120), MEDIUM(160), BIG(180);
 
         private int value;
 
@@ -35,24 +35,21 @@ public class Dice extends AppCompatImageView {
         }
     }
 
-    private static final DiceValue DEFAULT_DICE_VALUE = DiceValue.ONE;
-    private static final DiceSize DEFAULT_DICE_SIZE = DiceSize.BIG;
-
     public Dice(Context ct)
     {
-        this(ct, DEFAULT_DICE_VALUE);
+        this(ct, DiceValue.DEFAULT);
     }
 
     public Dice(Context ct, DiceValue value)
     {
-        this(ct, value, DEFAULT_DICE_SIZE);
+        this(ct, value, DiceSize.DEFAULT);
     }
 
     public Dice(Context ct, DiceValue value, DiceSize size)
     {
         super(ct);
         setDiceSize(size);
-        setDiceImage(value);
+        setDiceValue(value);
     }
 
     public void setDiceSize(DiceSize size)
@@ -63,7 +60,7 @@ public class Dice extends AppCompatImageView {
         setLayoutParams(params);
     }
 
-    private void setDiceImage(DiceValue value)
+    public void setDiceValue(DiceValue value)
     {
         int imageResource;
         switch(value)
