@@ -17,7 +17,25 @@ public class Dice extends AppCompatImageView {
         }
     }
 
-    public static final DiceValue DEFAULT_DICE_VALUE = DiceValue.ONE;
+    public enum DiceSize {
+
+        SMALL(100), MEDIUM(140), BIG(180);
+
+        private int value;
+
+        DiceSize(int value)
+        {
+            this.value = value;
+        }
+
+        public int getSize()
+        {
+            return value;
+        }
+    }
+
+    private static final DiceValue DEFAULT_DICE_VALUE = DiceValue.ONE;
+    private static final DiceSize DEFAULT_DICE_SIZE = DiceSize.BIG;
 
     public Dice(Context ct)
     {
@@ -26,21 +44,21 @@ public class Dice extends AppCompatImageView {
 
     public Dice(Context ct, DiceValue value)
     {
+        this(ct, value, DEFAULT_DICE_SIZE);
+    }
+
+    public Dice(Context ct, DiceValue value, DiceSize size)
+    {
         super(ct);
-//        setDiceVisualProperties();
+        setVisualProperties(size.getSize());
         setDiceImage(value);
     }
 
-    private void setDiceVisualProperties()
+    private void setVisualProperties(int size)
     {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                1);
+        System.out.println(size);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size,1);
         setLayoutParams(params);
-        setScaleType(ScaleType.FIT_CENTER);
-//        setMaxWidth(100);
-//        setMaxHeight(100);
     }
 
     private void setDiceImage(DiceValue value)
