@@ -1,74 +1,61 @@
 package com.example.dice.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
+import com.example.dice.R;
+
 public class DiceContainer extends LinearLayout {
 
-    private static final int INITIAL_DICE_COUNT = 1;
-    private static final int MIN_DICE_COUNT = 0;
-    private static final int MAX_DICE_COUNT = 6;
-
     private Context ct;
+
+    private int MAX_DICE_COUNT = 2;
+    private int DICE_PER_ROW = 2;
+
     private int diceCount;
 
     public DiceContainer(Context ct, AttributeSet attrs)
     {
         super(ct, attrs);
         this.ct = ct;
-        initializeDices();
+        setProperties(ct, attrs);
     }
 
-    private void initializeDices()
+    private void setProperties(Context ct, AttributeSet attrs)
     {
-        for(int i = 0; i < INITIAL_DICE_COUNT; i++)
+        TypedArray a = ct.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.DiceContainer,
+                0, 0);
+        if(a.hasValue(R.styleable.DiceContainer_maxDiceCount))
         {
-            addDice();
+            MAX_DICE_COUNT = a.getInt(R.styleable.DiceContainer_maxDiceCount, MAX_DICE_COUNT);
         }
+        if(a.hasValue(R.styleable.DiceContainer_dicePerRow))
+        {
+            DICE_PER_ROW = a.getInt(R.styleable.DiceContainer_dicePerRow, DICE_PER_ROW);
+        }
+        a.recycle();
     }
 
     public Dice addDice()
     {
         Dice dice = null;
-        if(diceCount < MAX_DICE_COUNT)
+        if(diceCount%2 == 0)
         {
-            if(diceCount == 0)
-            {
-                DiceRow diceRow = new DiceRow(ct);
-                dice = diceRow.addDice();
-                addView(diceRow);
-            }
-            else if(diceCount == 1)
-            {
-                DiceRow diceRow = (DiceRow) getChildAt(0);
-                dice = diceRow.addDice();
-            }
-            else if(diceCount == 2)
-            {
-                DiceRow diceRow = new DiceRow(ct);
-                dice = diceRow.addDice();
-                addView(diceRow);
-            }
-            else if(diceCount == 3)
-            {
-                DiceRow diceRow = (DiceRow) getChildAt(1);
-                dice = diceRow.addDice();
-
-            }
-            else if(diceCount == 4)
-            {
-                DiceRow diceRow = (DiceRow) getChildAt(0);
-                dice = diceRow.addDice();
-            }
-            else
-            {
-                DiceRow diceRow = (DiceRow) getChildAt(1);
-                dice = diceRow.addDice();
-            }
-            diceCount++;
-            adjustDiceSizes();
+            DiceRow diceRow = new DiceRow(ct);
+            dice = diceRow.addDice();
+            addView(diceRow);
         }
+        else
+        {
+            DiceRow diceRow = (DiceRow) getChildAt(getChildCount()-1);
+            diceRow.addDice();
+        }
+        diceCount++;
+        adjustDiceSizes();
         return dice;
 
     }
@@ -81,7 +68,7 @@ public class DiceContainer extends LinearLayout {
     private void adjustDiceSizes()
     {
         Dice.DiceSize size;
-        if(diceCount < 2)
+        if(diceCount < 3)
         {
             size = Dice.DiceSize.BIG;
         }
