@@ -1,4 +1,4 @@
-package com.example.dice;
+package com.example.dice.views;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -8,34 +8,31 @@ import android.widget.LinearLayout;
 public class DiceRow extends LinearLayout {
 
     private Context ct;
-    private static final int DEFAULT_LEFT_MARGIN = 10;
-    private static final int DEFAULT_TOP_MARGIN = 50;
-    private static final int DEFAULT_RIGHT_MARGIN = 10;
-    private static final int DEFAULT_BOTTOM_MARGIN = 0;
+
 
 
     public DiceRow(Context ct)
     {
         super(ct);
         this.ct = ct;
-        setMargins(DEFAULT_LEFT_MARGIN, DEFAULT_TOP_MARGIN, DEFAULT_RIGHT_MARGIN, DEFAULT_BOTTOM_MARGIN);
-        setGravity(Gravity.CENTER);
+        setVisualProperties();
     }
 
-    private void setMargins(int leftMargin, int topMargin, int rightMargin, int bottomMargin)
+    private void setVisualProperties()
     {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 1);
-        params.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
         setLayoutParams(params);
+        setGravity(Gravity.CENTER);
     }
 
-    public void addDice()
+    public Dice addDice()
     {
         Dice dice = new Dice(ct);
         addView(dice);
+        return dice;
     }
 
 
@@ -48,9 +45,9 @@ public class DiceRow extends LinearLayout {
         }
     }
 
-    public void removeDice()
+    public Dice removeDice()
     {
-
+        return null;
     }
 
 }

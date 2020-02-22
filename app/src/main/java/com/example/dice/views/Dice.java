@@ -1,10 +1,11 @@
-package com.example.dice;
+package com.example.dice.views;
 
 import android.content.Context;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatImageView;
+
+import com.example.dice.R;
 
 public class Dice extends AppCompatImageView {
 

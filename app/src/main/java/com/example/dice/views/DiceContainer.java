@@ -1,4 +1,4 @@
-package com.example.dice;
+package com.example.dice.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -28,43 +28,54 @@ public class DiceContainer extends LinearLayout {
         }
     }
 
-    public void addDice()
+    public Dice addDice()
     {
+        Dice dice = null;
         if(diceCount < MAX_DICE_COUNT)
         {
             if(diceCount == 0)
             {
                 DiceRow diceRow = new DiceRow(ct);
-                diceRow.addDice();
+                dice = diceRow.addDice();
                 addView(diceRow);
             }
             else if(diceCount == 1)
             {
                 DiceRow diceRow = (DiceRow) getChildAt(0);
-                diceRow.addDice();
+                dice = diceRow.addDice();
             }
             else if(diceCount == 2)
             {
                 DiceRow diceRow = new DiceRow(ct);
-                diceRow.addDice();
+                dice = diceRow.addDice();
                 addView(diceRow);
             }
-            else if(diceCount%2 == 0)
+            else if(diceCount == 3)
+            {
+                DiceRow diceRow = (DiceRow) getChildAt(1);
+                dice = diceRow.addDice();
+
+            }
+            else if(diceCount == 4)
             {
                 DiceRow diceRow = (DiceRow) getChildAt(0);
-                diceRow.addDice();
+                dice = diceRow.addDice();
             }
             else
             {
                 DiceRow diceRow = (DiceRow) getChildAt(1);
-                diceRow.addDice();
+                dice = diceRow.addDice();
             }
             diceCount++;
             adjustDiceSizes();
-            adjustDiceRowsMargins();
-
         }
+        return dice;
 
+    }
+
+    public Dice removeDice()
+    {
+        return null;
     }
 
     private void adjustDiceSizes()
@@ -87,19 +98,6 @@ public class DiceContainer extends LinearLayout {
             DiceRow diceRow = (DiceRow) getChildAt(i);
             diceRow.setDiceSizes(size);
         }
-    }
-
-    private void adjustDiceRowsMargins()
-    {
-//        int leftMargin;
-//        int topMargin;
-//        int rightMargin;
-//        int bottomMargin;
-//        for(int i = 0; i < getChildCount(); i++)
-//        {
-//            DiceRow diceRow = (DiceRow) getChildAt(i);
-//            if(i == 0)
-//        }
     }
 
 }
