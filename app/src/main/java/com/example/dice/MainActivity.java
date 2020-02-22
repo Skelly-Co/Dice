@@ -11,9 +11,14 @@ import com.example.dice.views.DiceContainer;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int INITIAL_DICE_COUNT = 1;
+    private static final int MIN_DICE_COUNT = 0;
+    private static final int MAX_DICE_COUNT = 6;
+
     private DiceContainer diceContainer;
-    private DiceRollManager rollManager;
     private Button btnRoll, btnAddDice, btnRemoveDice;
+
+    private DiceRollManager rollManager = new DiceRollManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initializeViews();
+        initializeDice();
     }
 
     private void initializeViews()
@@ -51,14 +57,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void initializeDice()
+    {
+        for(int i = 0; i < INITIAL_DICE_COUNT; i++)
+        {
+            addDice();
+        }
+    }
+
     private void addDice()
     {
         Dice dice = diceContainer.addDice();
+        rollManager.addDice(dice);
     }
 
     private void removeDice()
     {
         Dice dice = diceContainer.removeDice();
+        rollManager.addDice(dice);
     }
 
     private void roll()
