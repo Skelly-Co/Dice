@@ -69,6 +69,7 @@
             android:layout_weight="1.4"
             android:background="@drawable/round_button"
             android:minHeight="20dp"
+            android:textColor="@android:color/black"
             android:text="@string/minus"
             android:textSize="18sp" />
 
@@ -78,10 +79,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:background="@android:color/transparent"
+            android:textColor="@android:color/black"
             android:text="@string/roll"
-            android:textSize="12sp"
-            android:textStyle="italic" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnAddDice"
@@ -94,6 +97,7 @@
             android:layout_weight="1.4"
             android:background="@drawable/round_button"
             android:minHeight="20dp"
+            android:textColor="@android:color/black"
             android:text="@string/plus"
             android:textSize="18sp" />
 
