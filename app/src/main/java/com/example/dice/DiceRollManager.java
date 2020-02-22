@@ -12,15 +12,20 @@ public class DiceRollManager {
     public void addDice(Dice dice)
     {
         diceList.add(dice);
+        resetDice();
     }
 
-    public void removeDice(Dice dice)
+    private void removeDice(Dice dice)
     {
-
+        diceList.remove(dice);
+        resetDice();
     }
 
-    public void resetDice()
+    private void resetDice()
     {
-        
+        for(Dice dice : diceList)
+        {
+            dice.setDiceValue(Dice.DiceValue.DEFAULT);
+        }
     }
 }
