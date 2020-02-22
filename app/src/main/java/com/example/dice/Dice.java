@@ -50,14 +50,15 @@ public class Dice extends AppCompatImageView {
     public Dice(Context ct, DiceValue value, DiceSize size)
     {
         super(ct);
-        setVisualProperties(size.getSize());
+        setDiceSize(size);
         setDiceImage(value);
     }
 
-    private void setVisualProperties(int size)
+    private void setDiceSize(DiceSize size)
     {
-        System.out.println(size);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size,1);
+        final float scale = getResources().getDisplayMetrics().density;
+        int dpSizeInPx  = (int) (size.getSize() * scale);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dpSizeInPx, dpSizeInPx,1);
         setLayoutParams(params);
     }
 
