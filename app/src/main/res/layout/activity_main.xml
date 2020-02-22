@@ -14,8 +14,8 @@
         android:layout_weight="3.2"
         android:orientation="horizontal" />
 
-    <LinearLayout
-        android:id="@+id/linDiceContainer"
+    <com.example.dice.DiceContainer
+        android:id="@+id/diceContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.1"
@@ -51,7 +51,7 @@
 
 <!--        </LinearLayout>-->
 
-    </LinearLayout>
+    </com.example.dice.DiceContainer>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
