@@ -9,8 +9,6 @@ public class DiceRow extends LinearLayout {
 
     private Context ct;
 
-
-
     public DiceRow(Context ct)
     {
         super(ct);
