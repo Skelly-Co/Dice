@@ -61,6 +61,7 @@ public class DiceContainer extends LinearLayout {
             }
             diceCount++;
             adjustDiceSizes();
+            adjustDiceRowsMargins();
 
         }
 
@@ -86,6 +87,19 @@ public class DiceContainer extends LinearLayout {
             DiceRow diceRow = (DiceRow) getChildAt(i);
             diceRow.setDiceSizes(size);
         }
+    }
+
+    private void adjustDiceRowsMargins()
+    {
+//        int leftMargin;
+//        int topMargin;
+//        int rightMargin;
+//        int bottomMargin;
+//        for(int i = 0; i < getChildCount(); i++)
+//        {
+//            DiceRow diceRow = (DiceRow) getChildAt(i);
+//            if(i == 0)
+//        }
     }
 
 }
