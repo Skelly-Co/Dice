@@ -3,23 +3,18 @@ package com.example.dice;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout linDiceContainer;
     private Button btnRoll, btnAddDice, btnRemoveDice;
 
-    private static final int INITIAL_DICE_NUMBER = 1;
+    private static final int INITIAL_DICE_COUNT = 1;
 
-    private int currentDiceNumber;
+    private int diceCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeDices()
     {
-        for(int i = 0; i < INITIAL_DICE_NUMBER; i++)
+        for(int i = 0; i < INITIAL_DICE_COUNT; i++)
         {
             addDice();
         }
@@ -55,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDice()
     {
-        if(currentDiceNumber == 0)
+        if(diceCount == 0)
         {
             DiceRow diceRow = new DiceRow(this);
             diceRow.addDice(new Dice(this));
             linDiceContainer.addView(diceRow);
         }
-        currentDiceNumber++;
+        diceCount++;
     }
 
     private void removeDice()
