@@ -1,10 +1,12 @@
 package com.example.dice;
 
 import android.content.Context;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.AppCompatImageView;
 
-public class Dice extends AppCompatImageButton {
+public class Dice extends AppCompatImageView {
 
     public enum DiceValue {
         ONE, TWO, THREE, FOUR, FIVE, SIX;
@@ -25,7 +27,20 @@ public class Dice extends AppCompatImageButton {
     public Dice(Context ct, DiceValue value)
     {
         super(ct);
+//        setDiceVisualProperties();
         setDiceImage(value);
+    }
+
+    private void setDiceVisualProperties()
+    {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                1);
+        setLayoutParams(params);
+        setScaleType(ScaleType.FIT_CENTER);
+//        setMaxWidth(100);
+//        setMaxHeight(100);
     }
 
     private void setDiceImage(DiceValue value)
