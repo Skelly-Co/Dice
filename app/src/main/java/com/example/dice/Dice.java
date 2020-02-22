@@ -54,7 +54,7 @@ public class Dice extends AppCompatImageView {
         setDiceImage(value);
     }
 
-    private void setDiceSize(DiceSize size)
+    public void setDiceSize(DiceSize size)
     {
         final float scale = getResources().getDisplayMetrics().density;
         int dpSizeInPx  = (int) (size.getSize() * scale);
