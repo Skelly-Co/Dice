@@ -10,17 +10,53 @@ import com.example.dice.R;
 public class Dice extends AppCompatImageView {
 
     public enum DiceValue {
-        DEFAULT, ONE, TWO, THREE, FOUR, FIVE, SIX;
+        ONE(1, R.drawable.dice_one),
+        TWO(2, R.drawable.dice_two),
+        THREE(3, R.drawable.dice_three),
+        FOUR(4, R.drawable.dice_four),
+        FIVE(5, R.drawable.dice_five),
+        SIX(6, R.drawable.dice_six);
+
+        public static final DiceValue MIN = ONE;
+        public static final DiceValue MAX = SIX;
+        public static final DiceValue DEFAULT = ONE;
+
+        private int value;
+        private static int image;
+
+        DiceValue(int value, int image)
+        {
+            this.value = value;
+        }
 
         public static DiceValue getDiceValue(int value)
         {
-            return DiceValue.values()[value+1];
+            for(DiceValue dv : values())
+            {
+                if(dv.getValue() == value)
+                {
+                    return dv;
+                }
+            }
+            return null;
+        }
+
+        public int getValue()
+        {
+            return value;
+        }
+
+        public int getImage()
+        {
+            return image;
         }
     }
 
     public enum DiceSize {
 
-        DEFAULT(180), SMALL(120), MEDIUM(160), BIG(180);
+        SMALL(120), MEDIUM(160), BIG(180);
+
+        public static final DiceSize DEFAULT = BIG;
 
         private int value;
 
@@ -62,30 +98,6 @@ public class Dice extends AppCompatImageView {
 
     public void setDiceValue(DiceValue value)
     {
-        int imageResource;
-        switch(value)
-        {
-            case ONE:
-                imageResource = R.drawable.dice_one;
-                break;
-            case TWO:
-                imageResource = R.drawable.dice_two;
-                break;
-            case THREE:
-                imageResource = R.drawable.dice_three;
-                break;
-            case FOUR:
-                imageResource = R.drawable.dice_four;
-                break;
-            case FIVE:
-                imageResource = R.drawable.dice_five;
-                break;
-            case SIX:
-                imageResource = R.drawable.dice_six;
-                break;
-            default:
-                imageResource = R.drawable.dice_one;
-        }
-        setImageResource(imageResource);
+        setImageResource(value.getImage());
     }
 }

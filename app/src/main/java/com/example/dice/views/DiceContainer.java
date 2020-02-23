@@ -57,8 +57,18 @@ public class DiceContainer extends LinearLayout {
 
     public Dice removeDice()
     {
-        DiceRow diceRow = (DiceRow) getChildAt(getChildCount()-1);
-        Dice dice = diceRow.removeDice();
+        Dice dice;
+        if((diceCount+1) % MAX_DICE_PER_ROW == 0)
+        {
+            DiceRow diceRow = (DiceRow) getChildAt(getChildCount()-1);
+            dice = diceRow.removeDice();
+            removeView(diceRow);
+        }
+        else
+        {
+            DiceRow diceRow = (DiceRow) getChildAt(getChildCount()-1);
+            dice = diceRow.removeDice();
+        }
         diceCount--;
         adjustDiceSizes();
         return dice;

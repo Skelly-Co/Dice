@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void roll()
     {
-
+        rollManager.roll();
     }
 
 }
