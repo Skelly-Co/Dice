@@ -22,11 +22,12 @@ public class Dice extends AppCompatImageView {
         public static final DiceValue DEFAULT = ONE;
 
         private int value;
-        private static int image;
+        private int image;
 
         DiceValue(int value, int image)
         {
             this.value = value;
+            this.image = image;
         }
 
         public static DiceValue getDiceValue(int value)
@@ -38,7 +39,7 @@ public class Dice extends AppCompatImageView {
                     return dv;
                 }
             }
-            return null;
+            return DEFAULT;
         }
 
         public int getValue()
