@@ -12,13 +12,14 @@ import com.example.dice.views.DiceContainer;
 public class MainActivity extends AppCompatActivity {
 
     private static final int INITIAL_DICE_COUNT = 1;
-    private static final int MIN_DICE_COUNT = 0;
+    private static final int MIN_DICE_COUNT = 1;
     private static final int MAX_DICE_COUNT = 6;
 
     private DiceContainer diceContainer;
     private Button btnRoll, btnAddDice, btnRemoveDice;
 
-    private DiceRollManager rollManager = new DiceRollManager();
+    private DiceRollManager rollManager = DiceRollManager.getInstance();
+    private int diceCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +68,42 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDice()
     {
-        Dice dice = diceContainer.addDice();
-        rollManager.addDice(dice);
+        if(diceCount < MAX_DICE_COUNT)
+        {
+            Dice dice = diceContainer.addDice();
+            rollManager.addDice(dice);
+            diceCount++;
+            setAddRemoveButtonsVisibility();
+        }
     }
 
     private void removeDice()
     {
-        Dice dice = diceContainer.removeDice();
-        rollManager.removeDice(dice);
+        if(diceCount > MIN_DICE_COUNT)
+        {
+            Dice dice = diceContainer.removeDice();
+            rollManager.removeDice(dice);
+            diceCount--;
+            setAddRemoveButtonsVisibility();
+        }
+    }
+
+    private void setAddRemoveButtonsVisibility()
+    {
+        if(diceCount <= MIN_DICE_COUNT)
+        {
+            btnRemoveDice.setVisibility(View.INVISIBLE);
+        }
+        else if(diceCount >= MAX_DICE_COUNT)
+        {
+            btnAddDice.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            btnAddDice.setVisibility(View.VISIBLE);
+            btnRemoveDice.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void roll()
