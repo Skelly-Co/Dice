@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="DiceContainer">
         <attr name="maxDicePerRow" format="integer"/>
+        <attr name="diceResizeInterval" format="integer"/>
     </declare-styleable>
 </resources>
