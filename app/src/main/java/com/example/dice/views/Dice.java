@@ -55,7 +55,7 @@ public class Dice extends AppCompatImageView {
 
     public enum DiceSize {
 
-        SMALL(120), MEDIUM(160), BIG(180);
+        VERY_SMALL(90), SMALL(100), MEDIUM(130), BIG(160), VERY_BIG(170);
 
         public static final DiceSize DEFAULT = BIG;
 
