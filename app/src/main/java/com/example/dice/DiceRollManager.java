@@ -3,7 +3,6 @@ package com.example.dice;
 import com.example.dice.views.Dice;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class DiceRollManager {
@@ -37,9 +36,9 @@ public class DiceRollManager {
         diceCount--;
     }
 
-    public List<Integer> roll()
+    public ArrayList<Integer> roll()
     {
-        List<Integer> results = new ArrayList<>();
+        ArrayList<Integer> results = new ArrayList<>();
         Random random = new Random();
         for(int i = 0; i < diceCount; i++)
         {
