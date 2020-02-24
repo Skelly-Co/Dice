@@ -1,5 +1,7 @@
 package com.example.dice;
 
+import android.media.MediaPlayer;
+
 import com.example.dice.views.Dice;
 
 import java.util.ArrayList;
@@ -39,12 +41,24 @@ public class DiceRollManager {
 
     public void roll()
     {
+        playRollingSound();
+        rollDice();
+    }
+
+    private void playRollingSound()
+    {
+//        MediaPlayer rollDiceSound  = MediaPlayer.create(this, R);
+//        rollDiceSound.start();
+    }
+
+    private void rollDice()
+    {
         Random random = new Random();
         for(Dice dice : diceList)
         {
             int rollResult = random.nextInt(
-                ((Dice.DiceValue.MAX.getValue() - Dice.DiceValue.MIN.getValue())
-                + 1) + Dice.DiceValue.MIN.getValue());
+                    ((Dice.DiceValue.MAX.getValue() - Dice.DiceValue.MIN.getValue())
+                            + 1) + Dice.DiceValue.MIN.getValue());
             dice.setDiceValue(Dice.DiceValue.getDiceValue(rollResult));
         }
     }
