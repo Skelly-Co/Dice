@@ -1,10 +1,12 @@
 package com.example.dice;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,6 +15,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.example.dice.views.Dice;
 import com.example.dice.views.DiceContainer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,14 +31,23 @@ public class MainActivity extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
     private DiceRollManager rollManager = DiceRollManager.getInstance();
+    private ArrayList<Integer> rollResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initializeViews();
-        initializeDice();
+
+        if(savedInstanceState != null)
+        {
+            rollResults = savedInstanceState.getIntegerArrayList("rollResults");
+            restoreDice();
+        }
+        else
+        {
+            initializeDice();
+        }
     }
 
     private void initializeViews()
@@ -74,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void addDice()
     {
         if(diceContainer.getDiceCount() < MAX_DICE_COUNT)
@@ -92,6 +105,16 @@ public class MainActivity extends AppCompatActivity {
             rollManager.removeDice();
             setAddRemoveButtonsVisibility();
         }
+    }
+
+    private void restoreDice()
+    {
+        for(int i = 0; i < rollResults.size(); i++)
+        {
+            diceContainer.addDice();
+            setAddRemoveButtonsVisibility();
+        }
+        diceContainer.updateDiceValues(rollResults);
     }
 
     private void setAddRemoveButtonsVisibility()
@@ -115,8 +138,8 @@ public class MainActivity extends AppCompatActivity {
     private void roll()
     {
         btnRoll.setEnabled(false);
+        rollResults = rollManager.roll();
         final List<Dice> diceList = diceContainer.getDiceList();
-        final List<Integer> results = rollManager.roll();
         for(int i = 0; i < diceList.size(); i++)
         {
             YoYo.AnimationComposer animation = createShakeAnimation().delay(i * SHAKE_ANIMATION_DELAY);
@@ -130,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        diceContainer.updateDiceValues(results);
+                        diceContainer.updateDiceValues(rollResults);
                         btnRoll.setEnabled(true);
                     }
 
@@ -143,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
             }
             animation.playOn(diceList.get(i));
         }
-
     }
 
     private YoYo.AnimationComposer createShakeAnimation()
@@ -154,9 +176,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void playRollingSound()
     {
-        MediaPlayer rollDiceSound  = MediaPlayer.create(this, R.raw.dice_roll);
-        rollDiceSound.start();
+        if(mediaPlayer == null)
+        {
+            mediaPlayer  = MediaPlayer.create(this, R.raw.dice_roll);
+        }
+        else if(mediaPlayer.isPlaying())
+        {
+            mediaPlayer.stop();
+            mediaPlayer  = MediaPlayer.create(this, R.raw.dice_roll);
+        }
+        mediaPlayer.start();
     }
 
-
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putIntegerArrayList("rollResults", rollResults);
+        super.onSaveInstanceState(outState);
+    }
 }
