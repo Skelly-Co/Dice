@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
     private DiceRollManager rollManager = DiceRollManager.getInstance();
-    private ArrayList<Integer> rollResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(savedInstanceState != null)
         {
-            rollResults = savedInstanceState.getIntegerArrayList("rollResults");
-            restoreDice();
+            int[] lastRoll = savedInstanceState.getIntArray("lastRoll");
+            restoreDice(lastRoll);
         }
         else
         {
@@ -107,14 +106,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void restoreDice()
+    private void restoreDice(int[] lastRoll)
     {
-        for(int i = 0; i < rollResults.size(); i++)
+        for(int i = 0; i < lastRoll.length; i++)
         {
             diceContainer.addDice();
             setAddRemoveButtonsVisibility();
         }
-        diceContainer.updateDiceValues(rollResults);
+        diceContainer.updateDiceValues(lastRoll);
     }
 
     private void setAddRemoveButtonsVisibility()
@@ -138,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     private void roll()
     {
         btnRoll.setEnabled(false);
-        rollResults = rollManager.roll();
+        final int[] rollResult = rollManager.roll();
         final List<Dice> diceList = diceContainer.getDiceList();
         for(int i = 0; i < diceList.size(); i++)
         {
@@ -153,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        diceContainer.updateDiceValues(rollResults);
+                        diceContainer.updateDiceValues(rollResult);
                         btnRoll.setEnabled(true);
                     }
 
@@ -190,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putIntegerArrayList("rollResults", rollResults);
+        outState.putIntArray("lastRoll", rollManager.getLastRollResult());
         super.onSaveInstanceState(outState);
     }
 }

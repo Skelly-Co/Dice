@@ -114,11 +114,11 @@ public class DiceContainer extends LinearLayout {
         }
     }
 
-    public void updateDiceValues(List<Integer> diceValues)
+    public void updateDiceValues(int[] diceValues)
     {
         for(int i = 0; i < diceList.size(); i++)
         {
-            Dice.DiceValue diceValue = Dice.DiceValue.getDiceValue(diceValues.get(i));
+            Dice.DiceValue diceValue = Dice.DiceValue.getDiceValue(diceValues[i]);
             diceList.get(i).setDiceValue(diceValue);
         }
     }
