@@ -2,6 +2,7 @@ package com.example.dice;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,11 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.example.dice.views.Dice;
 import com.example.dice.views.DiceContainer;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final int SHAKE_ANIMATION_DELAY = 75;
 
     private static final int INITIAL_DICE_COUNT = 1;
     private static final int MIN_DICE_COUNT = 1;
@@ -21,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private DiceContainer diceContainer;
     private Button btnRoll, btnAddDice, btnRemoveDice;
 
+    private MediaPlayer mediaPlayer;
     private DiceRollManager rollManager = DiceRollManager.getInstance();
-    private int diceCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,33 +76,31 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDice()
     {
-        if(diceCount < MAX_DICE_COUNT)
+        if(diceContainer.getDiceCount() < MAX_DICE_COUNT)
         {
-            Dice dice = diceContainer.addDice();
-            rollManager.addDice(dice);
-            diceCount++;
+            diceContainer.addDice();
+            rollManager.addDice();
             setAddRemoveButtonsVisibility();
         }
     }
 
     private void removeDice()
     {
-        if(diceCount > MIN_DICE_COUNT)
+        if(diceContainer.getDiceCount() > MIN_DICE_COUNT)
         {
-            Dice dice = diceContainer.removeDice();
-            rollManager.removeDice(dice);
-            diceCount--;
+            diceContainer.removeDice();
+            rollManager.removeDice();
             setAddRemoveButtonsVisibility();
         }
     }
 
     private void setAddRemoveButtonsVisibility()
     {
-        if(diceCount <= MIN_DICE_COUNT)
+        if(diceContainer.getDiceCount() <= MIN_DICE_COUNT)
         {
             btnRemoveDice.setVisibility(View.INVISIBLE);
         }
-        else if(diceCount >= MAX_DICE_COUNT)
+        else if(diceContainer.getDiceCount() >= MAX_DICE_COUNT)
         {
             btnAddDice.setVisibility(View.INVISIBLE);
         }
@@ -111,14 +114,42 @@ public class MainActivity extends AppCompatActivity {
 
     private void roll()
     {
-        rollManager.roll();
-        playShakeAnimation();
-        playRollingSound();
+        btnRoll.setEnabled(false);
+        final List<Dice> diceList = diceContainer.getDiceList();
+        final List<Integer> results = rollManager.roll();
+        for(int i = 0; i < diceList.size(); i++)
+        {
+            YoYo.AnimationComposer animation = createShakeAnimation().delay(i * SHAKE_ANIMATION_DELAY);
+            if(i == diceList.size()-1)
+            {
+                animation.withListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        playRollingSound();
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        diceContainer.updateDiceValues(results);
+                        btnRoll.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) { }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) { }
+                });
+            }
+            animation.playOn(diceList.get(i));
+        }
+
     }
 
-    private void playShakeAnimation()
+    private YoYo.AnimationComposer createShakeAnimation()
     {
-//        YoYo.with(Techniques.Shake).duration(700).repeat(0).playOn(diceContainer);
+        YoYo.AnimationComposer animation = YoYo.with(Techniques.Shake).duration(600);
+        return animation;
     }
 
     private void playRollingSound()
