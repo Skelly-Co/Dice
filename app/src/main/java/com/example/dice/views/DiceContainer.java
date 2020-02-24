@@ -15,7 +15,8 @@ public class DiceContainer extends LinearLayout {
     private List<Dice> diceList = new ArrayList<>();
     private Context ct;
 
-    private int MAX_DICE_PER_ROW = Integer.MAX_VALUE;
+    private int maxDicePerRow = Integer.MAX_VALUE;
+    private int diceResizeInterval = Integer.MAX_VALUE;
 
     public DiceContainer(Context ct, AttributeSet attrs)
     {
@@ -32,14 +33,18 @@ public class DiceContainer extends LinearLayout {
                 0, 0);
         if(a.hasValue(R.styleable.DiceContainer_maxDicePerRow))
         {
-            MAX_DICE_PER_ROW = a.getInt(R.styleable.DiceContainer_maxDicePerRow, MAX_DICE_PER_ROW);
+            maxDicePerRow = a.getInt(R.styleable.DiceContainer_maxDicePerRow, maxDicePerRow);
+        }
+        if(a.hasValue(R.styleable.DiceContainer_diceResizeInterval))
+        {
+            diceResizeInterval = a.getInt(R.styleable.DiceContainer_diceResizeInterval, diceResizeInterval);
         }
         a.recycle();
     }
 
     public void addDice()
     {
-        if(diceList.size() % MAX_DICE_PER_ROW == 0)
+        if(diceList.size() % maxDicePerRow == 0)
         {
             DiceRow diceRow = new DiceRow(ct);
             diceList.add(diceRow.addDice());
@@ -56,7 +61,7 @@ public class DiceContainer extends LinearLayout {
 
     public void removeDice()
     {
-        if((diceList.size() + 1 ) % MAX_DICE_PER_ROW == 0)
+        if((diceList.size() - 1) % maxDicePerRow == 0)
         {
             DiceRow diceRow = (DiceRow) getChildAt(getChildCount()-1);
             diceList.remove(diceRow.removeDice());
@@ -82,17 +87,25 @@ public class DiceContainer extends LinearLayout {
     private void adjustDiceSizes()
     {
         Dice.DiceSize size;
-        if(diceList.size() <= MAX_DICE_PER_ROW)
+        if(diceList.size() <= diceResizeInterval)
+        {
+            size = Dice.DiceSize.VERY_BIG;
+        }
+        else if(diceList.size() <= diceResizeInterval * 2)
         {
             size = Dice.DiceSize.BIG;
         }
-        else if(diceList.size() <= MAX_DICE_PER_ROW * 2)
+        else if(diceList.size() <= diceResizeInterval * 3)
         {
             size = Dice.DiceSize.MEDIUM;
         }
-        else
+        else if(diceList.size() <= diceResizeInterval * 4)
         {
             size = Dice.DiceSize.SMALL;
+        }
+        else
+        {
+            size = Dice.DiceSize.VERY_SMALL;
         }
         for(int i = 0; i < getChildCount(); i++)
         {
