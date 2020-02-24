@@ -7,13 +7,15 @@ import android.widget.LinearLayout;
 
 import com.example.dice.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DiceContainer extends LinearLayout {
 
+    private List<Dice> diceList = new ArrayList<>();
     private Context ct;
 
     private int MAX_DICE_PER_ROW = Integer.MAX_VALUE;
-
-    private int diceCount;
 
     public DiceContainer(Context ct, AttributeSet attrs)
     {
@@ -35,53 +37,56 @@ public class DiceContainer extends LinearLayout {
         a.recycle();
     }
 
-    public Dice addDice()
+    public void addDice()
     {
-        Dice dice;
-        if(diceCount%MAX_DICE_PER_ROW == 0)
+        if(diceList.size() % MAX_DICE_PER_ROW == 0)
         {
             DiceRow diceRow = new DiceRow(ct);
-            dice = diceRow.addDice();
+            diceList.add(diceRow.addDice());
             addView(diceRow);
         }
         else
         {
             DiceRow diceRow = (DiceRow) getChildAt(getChildCount()-1);
-            dice = diceRow.addDice();
+            diceList.add(diceRow.addDice());
         }
-        diceCount++;
+        resetDice();
         adjustDiceSizes();
-        return dice;
-
     }
 
-    public Dice removeDice()
+    public void removeDice()
     {
-        Dice dice;
-        if((diceCount+1) % MAX_DICE_PER_ROW == 0)
+        if((diceList.size() + 1 ) % MAX_DICE_PER_ROW == 0)
         {
             DiceRow diceRow = (DiceRow) getChildAt(getChildCount()-1);
-            dice = diceRow.removeDice();
+            diceList.remove(diceRow.removeDice());
             removeView(diceRow);
         }
         else
         {
             DiceRow diceRow = (DiceRow) getChildAt(getChildCount()-1);
-            dice = diceRow.removeDice();
+            diceList.remove(diceRow.removeDice());
         }
-        diceCount--;
+        resetDice();
         adjustDiceSizes();
-        return dice;
+    }
+
+    public void resetDice()
+    {
+        for(int i = 0; i < getChildCount(); i++)
+        {
+            ((DiceRow)getChildAt(i)).resetDice();
+        }
     }
 
     private void adjustDiceSizes()
     {
         Dice.DiceSize size;
-        if(diceCount <= MAX_DICE_PER_ROW)
+        if(diceList.size() <= MAX_DICE_PER_ROW)
         {
             size = Dice.DiceSize.BIG;
         }
-        else if(diceCount <= MAX_DICE_PER_ROW * 2)
+        else if(diceList.size() <= MAX_DICE_PER_ROW * 2)
         {
             size = Dice.DiceSize.MEDIUM;
         }
@@ -96,4 +101,22 @@ public class DiceContainer extends LinearLayout {
         }
     }
 
+    public void updateDiceValues(List<Integer> diceValues)
+    {
+        for(int i = 0; i < diceList.size(); i++)
+        {
+            Dice.DiceValue diceValue = Dice.DiceValue.getDiceValue(diceValues.get(i));
+            diceList.get(i).setDiceValue(diceValue);
+        }
+    }
+
+    public List<Dice> getDiceList()
+    {
+        return diceList;
+    }
+
+    public int getDiceCount()
+    {
+        return diceList.size();
+    }
 }
