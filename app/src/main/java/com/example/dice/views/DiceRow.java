@@ -50,4 +50,12 @@ public class DiceRow extends LinearLayout {
         return dice;
     }
 
+    public void resetDice()
+    {
+        for(int i = 0; i < getChildCount(); i++)
+        {
+            ((Dice)getChildAt(i)).setDiceValue(Dice.DiceValue.DEFAULT);
+        }
+    }
+
 }
