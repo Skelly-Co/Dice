@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2.8"
+        android:orientation="horizontal" />
+
+    <com.example.dice.views.DiceContainer
+        android:id="@+id/diceContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:maxDicePerRow="6"
+        app:diceResizeInterval="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnRemoveDice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.4"
+            android:background="@drawable/round_button"
+            android:minHeight="20dp"
+            android:textColor="@android:color/black"
+            android:text="@string/minus"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btnRoll"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/black"
+            android:text="@string/roll"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnAddDice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.4"
+            android:background="@drawable/round_button"
+            android:minHeight="20dp"
+            android:textColor="@android:color/black"
+            android:text="@string/plus"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>
