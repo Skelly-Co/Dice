@@ -1,5 +1,6 @@
 package com.example.dice;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 
 import com.example.dice.views.Dice;
@@ -11,7 +12,7 @@ import java.util.Random;
 public class DiceRollManager {
 
     private List<Dice> diceList = new ArrayList<>();
-    public static DiceRollManager instance;
+    private static DiceRollManager instance;
 
     private DiceRollManager()
     {
@@ -41,15 +42,9 @@ public class DiceRollManager {
 
     public void roll()
     {
-        playRollingSound();
         rollDice();
     }
 
-    private void playRollingSound()
-    {
-//        MediaPlayer rollDiceSound  = MediaPlayer.create(this, R);
-//        rollDiceSound.start();
-    }
 
     private void rollDice()
     {

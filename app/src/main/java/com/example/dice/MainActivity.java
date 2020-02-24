@@ -2,10 +2,13 @@ package com.example.dice;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.dice.views.Dice;
 import com.example.dice.views.DiceContainer;
 
@@ -109,6 +112,20 @@ public class MainActivity extends AppCompatActivity {
     private void roll()
     {
         rollManager.roll();
+        playShakeAnimation();
+        playRollingSound();
     }
+
+    private void playShakeAnimation()
+    {
+//        YoYo.with(Techniques.Shake).duration(700).repeat(0).playOn(diceContainer);
+    }
+
+    private void playRollingSound()
+    {
+        MediaPlayer rollDiceSound  = MediaPlayer.create(this, R.raw.dice_roll);
+        rollDiceSound.start();
+    }
+
 
 }
