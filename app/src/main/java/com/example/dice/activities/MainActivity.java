@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int MAX_DICE_COUNT = 6;
 
     private DiceContainer diceContainer;
-    private Button btnRoll, btnAddDice, btnRemoveDice;
+    private Button btnRoll, btnAddDice, btnRemoveDice, btnHistory;
 
     private MediaPlayer mediaPlayer;
     private DiceRollManager rollManager = DiceRollManager.getInstance();
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btnAddDice = findViewById(R.id.btnAddDice);
         btnRemoveDice = findViewById(R.id.btnRemoveDice);
         btnRoll = findViewById(R.id.btnRoll);
+        btnHistory = findViewById(R.id.btnHistory);
 
         btnAddDice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 roll();
+            }
+        });
+        btnHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openHistoryActivity();
             }
         });
     }
@@ -108,12 +116,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void restoreDice(int[] lastRoll)
     {
-        for(int i = 0; i < lastRoll.length; i++)
+        for(int i = 0; i < rollManager.getDiceCount(); i++)
         {
             diceContainer.addDice();
             setAddRemoveButtonsVisibility();
         }
-        diceContainer.updateDiceValues(lastRoll);
+        if(lastRoll != null)
+        {
+            diceContainer.updateDiceValues(lastRoll);
+        }
     }
 
     private void setAddRemoveButtonsVisibility()
@@ -187,9 +198,19 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.start();
     }
 
+    private void openHistoryActivity()
+    {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putIntArray("lastRoll", rollManager.getLastRollResult());
+        int[] lastRollResult = rollManager.getLastRollResult();
+        if(lastRollResult != null)
+        {
+            outState.putIntArray("lastRoll", rollManager.getLastRollResult());
+        }
         super.onSaveInstanceState(outState);
     }
 }

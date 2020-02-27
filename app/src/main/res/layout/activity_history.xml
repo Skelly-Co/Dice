@@ -7,6 +7,7 @@
     tools:context=".activities.HistoryActivity">
 
     <ListView
+        android:id="@+id/lstHistory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
@@ -17,12 +18,14 @@
         android:layout_height="match_parent"
         android:layout_weight="6">
         <Button
+            android:id="@+id/btnBack"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
         </Button>
         <Button
+            android:id="@+id/btnClear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
