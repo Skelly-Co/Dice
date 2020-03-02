@@ -19,6 +19,8 @@
         android:layout_weight="6">
         <Button
             android:id="@+id/btnBack"
+            android:text="@string/back"
+            android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -26,6 +28,8 @@
         </Button>
         <Button
             android:id="@+id/btnClear"
+            android:text="@string/clear"
+            android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">

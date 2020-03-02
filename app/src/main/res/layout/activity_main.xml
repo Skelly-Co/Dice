@@ -16,13 +16,12 @@
         android:orientation="horizontal"
         android:gravity="right">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnHistory"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:background="@android:color/transparent" />
+            android:src="@drawable/dice_history" />
 
     </LinearLayout>
 
@@ -51,8 +50,8 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="47dp"
             android:layout_weight="1.4"
-            android:background="@drawable/round_button"
             android:minHeight="20dp"
+            android:background="@android:color/transparent"
             android:textColor="@android:color/black"
             android:text="@string/minus"
             android:textSize="18sp" />
@@ -63,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:background="@android:color/transparent"
             android:textColor="@android:color/black"
             android:text="@string/roll"
@@ -79,8 +77,8 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="47dp"
             android:layout_weight="1.4"
-            android:background="@drawable/round_button"
             android:minHeight="20dp"
+            android:background="@android:color/transparent"
             android:textColor="@android:color/black"
             android:text="@string/plus"
             android:textSize="18sp" />

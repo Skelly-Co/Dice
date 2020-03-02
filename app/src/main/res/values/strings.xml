@@ -3,4 +3,6 @@
     <string name="plus">+</string>
     <string name="minus">—</string>
     <string name="roll">Roll !</string>
+    <string name="back">Back</string>
+    <string name="clear">Clear</string>
 </resources>

@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int MAX_DICE_COUNT = 6;
 
     private DiceContainer diceContainer;
-    private Button btnRoll, btnAddDice, btnRemoveDice, btnHistory;
+    private Button btnRoll, btnAddDice, btnRemoveDice;
+    private ImageButton ibnHistory;
 
     private MediaPlayer mediaPlayer;
     private DiceRollManager rollManager = DiceRollManager.getInstance();
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         btnAddDice = findViewById(R.id.btnAddDice);
         btnRemoveDice = findViewById(R.id.btnRemoveDice);
         btnRoll = findViewById(R.id.btnRoll);
-        btnHistory = findViewById(R.id.btnHistory);
+        ibnHistory= findViewById(R.id.btnHistory);
 
         btnAddDice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 roll();
             }
         });
-        btnHistory.setOnClickListener(new View.OnClickListener() {
+        ibnHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openHistoryActivity();
